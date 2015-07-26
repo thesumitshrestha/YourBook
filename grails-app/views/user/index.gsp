@@ -9,32 +9,37 @@
 	</head>
 	<body>
 		<div id="list-user" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
-			</g:if>
-            <table class="ui table segment">
+			<h1 style="text-align: center"><g:message code="default.list.label" args="[entityName]" /></h1>
+            <g:if test="${flash.message}">
+                <div class="ui center aligned segment">
+                    <div class="ui positive message">
+                        <div class="header">
+                            <h1 style="text-align: center">${flash.message}</h1>
+                        </div>
+                    </div>
+                </div>
+            </g:if>
+            <table class="ui celled table" style="margin: 0px auto;width: 95%;">
 			<thead>
 					<tr>
-					
-						<g:sortableColumn property="password" title="${message(code: 'user.password.label', default: 'Password')}" />
-					
-						<g:sortableColumn property="userName" title="${message(code: 'user.userName.label', default: 'User Name')}" />
-					
-						<g:sortableColumn property="role" title="${message(code: 'user.role.label', default: 'Role')}" />
+
+                        <g:sortableColumn style="text-align: center" property="userName" title="${message(code: 'user.userName.label', default: 'User Name')}" />
+
+                        <g:sortableColumn style="text-align: center" property="role" title="${message(code: 'user.role.label', default: 'Role')}" />
+						<g:sortableColumn style="text-align: center" property="password" title="${message(code: 'user.password.label', default: 'Password')}" />
+
 					
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${userInstanceList}" status="i" var="userInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="show" id="${userInstance.id}">${fieldValue(bean: userInstance, field: "password")}</g:link></td>
-					
-						<td>${fieldValue(bean: userInstance, field: "userName")}</td>
-					
-						<td>${fieldValue(bean: userInstance, field: "role")}</td>
-					
+                        <td style="text-align: center"><g:link action="show" id="${userInstance.id}">${fieldValue(bean: userInstance, field: "userName")}</g:link></td>
+
+                        <td style="text-align: center">${fieldValue(bean: userInstance, field: "role")}</td>
+
+                        <td style="text-align: center">${fieldValue(bean: userInstance, field: "password")}</td>
+
 					</tr>
 				</g:each>
 				</tbody>

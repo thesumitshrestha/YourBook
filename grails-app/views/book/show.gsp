@@ -88,11 +88,14 @@
     </div>
     <div class="ui grey segment">
         <g:form url="[resource:bookInstance, action:'delete']" method="DELETE">
-            <fieldset class="buttons">
-                <g:link class="edit" action="edit" resource="${bookInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-                &nbsp;&nbsp;&nbsp;<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-            </fieldset>
+            <div class="ui buttons">
+                <button class="ui button"><g:link class="edit" action="edit" resource="${bookInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+                </button>
+                <div class="or"></div>
+                <g:actionSubmit class="ui secondary button" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+            </div>
         </g:form>
+
     </div>
 </div>
 </body>

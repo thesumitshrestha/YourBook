@@ -10,7 +10,6 @@ class ReserveController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Reserve.list(params), model: [reserveInstanceCount: Reserve.count()]
-
     }
     def mail(){
         println"params.mId"+params.mId
@@ -32,7 +31,12 @@ class ReserveController {
     def show(Reserve reserveInstance) {
         respond reserveInstance
     }
+    def search(){
+        def reserveInstanceList=Reserve.findAllByBook(Book.findByBook_titleIlike("%" + params.query + "%"))
+        render(view: 'index', model: [reserveInstanceList: reserveInstanceList,reserveInstanceCount:reserveInstanceList.size()])
 
+
+    }
     def create() {
         println "this is reserversasa"
         def bookId=params.id
@@ -51,13 +55,13 @@ class ReserveController {
         reserve.save(flush: true)
     }
     def reserve() {
-        println "Hey"
 
         def reserve=new Reserve();
         reserve.book = Book.findById(params.bookId)
         reserve.member = Member.findById(params.memberId)
         reserve.save(flush: true)
-        redirect(action: 'index')
+        def reserveInstance=Reserve.findAllByBook(Book.findById(params.bookId))
+        render view:'reserveList',model:[reserveInstance:reserveInstance]
         flash.message="The book "+reserve.book+ ( " has been reserved by ")+reserve.member
     }
 

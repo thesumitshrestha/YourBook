@@ -6,14 +6,26 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'member.label', default: 'Member')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
+        <style>
+            #borrow{
+                padding: 15px;
+            }
+        </style>
 	</head>
 	<body>
-    <div class="ui red segment">
+    <br>
+    <div class="ui red segment" style="width: 90%;margin: 0px auto">
         <div id="show-member" class="content scaffold-show" role="main">
-			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
+			<h1 style="text-align: center"><g:message code="default.show.label" args="[entityName]" /></h1>
+            <g:if test="${flash.message}">
+                <div class="ui center aligned segment">
+                    <div class="ui positive message">
+                        <div class="header">
+                            <h1 style="text-align: center">${flash.message}</h1>
+                        </div>
+                    </div>
+                </div>
+            </g:if>
             </div>
                 <div class="ui green segment">
 				<g:if test="${memberInstance?.rollNumber}">
@@ -86,16 +98,6 @@
 				</g:if>
 			</div>
 
-                <div class="ui grey segment">
-
-                    <g:if test="${memberInstance?.borrow}">
-					<span id="borrow-label" class="property-label"><g:message code="member.borrow.label" default="Borrow" />: </span>
-					
-						<g:each in="${memberInstance.borrow}" var="b">
-						<span class="property-value" aria-labelledby="borrow-label"><g:link controller="borrow" action="show" id="${b.id}">${b?.encodeAsHTML()}</g:link></span>
-						</g:each>
-									</g:if>
-			</div>
                 <div class="ui pink segment">
 
                     <g:if test="${memberInstance?.type}">
@@ -114,13 +116,27 @@
 									</g:if>
 			
             </div>
+        <div class="ui green segment">
+
+            <g:if test="${memberInstance?.borrow}">
+               <b> <th style="text-align: center"> Book Borrowed by ${memberInstance?.firstName}: </th></b>
+
+                <g:each in="${memberInstance.borrow}" var="b">
+                    <span class="property-value" aria-labelledby="borrow-label">${b?.encodeAsHTML()},</span>
+                </g:each>        </g:if>
+        </div>
+
 
 			<g:form url="[resource:memberInstance, action:'delete']" method="DELETE">
-				<fieldset class="buttons">
-					<g:link class="edit" action="edit" resource="${memberInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
+                <div class="ui buttons">
+                    <button class="ui button">
+                        <g:link class="edit" action="edit" resource="${memberInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+                    </button>
+                    <div class="or"></div>
+                    <g:actionSubmit class="ui secondary button" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                </div>
 			</g:form>
-		</div>
-	</body>
+
+
+    </body>
 </html>

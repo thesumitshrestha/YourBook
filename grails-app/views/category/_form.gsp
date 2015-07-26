@@ -5,8 +5,8 @@
     <div class="required field">
     <div class="fieldcontain ${hasErrors(bean: categoryInstance, field: 'name', 'error')} required">
         <label for="name">
-            <g:message code="category.name.label" default="Name" />
-            <span class="required-indicator">*</span>
+           <b style="font-size: 24px;"> <g:message code="category.name.label" default="Name" /></b>
+            <span style="font-size: 24px;" class="required-indicator">*</span>
         </label>
         <g:textField name="name" required="" placeholder="Create Book Category" value="${categoryInstance?.name}"/>
     </div>

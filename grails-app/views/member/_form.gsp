@@ -9,9 +9,8 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="rollNumber" type="number" value="${memberInstance.rollNumber}" required=""/>
-
 </div>
-
+<br>
 <div class="fieldcontain ${hasErrors(bean: memberInstance, field: 'firstName', 'error')} required">
 	<label for="firstName">
 		<g:message code="member.firstName.label" default="First Name" />
@@ -20,7 +19,7 @@
 	<g:textField name="firstName" required="" value="${memberInstance?.firstName}"/>
 
 </div>
-
+<br>
 <div class="fieldcontain ${hasErrors(bean: memberInstance, field: 'lastName', 'error')} required">
 	<label for="lastName">
 		<g:message code="member.lastName.label" default="Last Name" />
@@ -30,15 +29,24 @@
 
 </div>
 
+    <br>
 <div class="fieldcontain ${hasErrors(bean: memberInstance, field: 'gender', 'error')} required">
-	<label for="gender">
-		<g:message code="member.gender.label" default="Gender" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select name="gender" from="${memberInstance.constraints.gender.inList}" required="" value="${memberInstance?.gender}" valueMessagePrefix="member.gender"/>
+    <div class="ui compact menu">
+        <div class="ui simple dropdown item">
+            <label for="gender">
+                <g:message code="member.gender.label" default="Gender" />
+                <span class="required-indicator">*</span>
+            </label>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+                <div class="item">	<g:select name="gender" from="${memberInstance.constraints.gender.inList}" required="" value="${memberInstance?.gender}" valueMessagePrefix="member.gender"/>
 
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
+<br>
 <div class="fieldcontain ${hasErrors(bean: memberInstance, field: 'address', 'error')} required">
 	<label for="address">
 		<g:message code="member.address.label" default="Address" />
@@ -47,16 +55,15 @@
 	<g:textField name="address" required="" value="${memberInstance?.address}"/>
 
 </div>
-
+<br>
 <div class="fieldcontain ${hasErrors(bean: memberInstance, field: 'contact', 'error')} required">
 	<label for="contact">
 		<g:message code="member.contact.label" default="Contact" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="contact" type="number" value="${memberInstance.contact}" required=""/>
-
 </div>
-
+<br>
 <div class="fieldcontain ${hasErrors(bean: memberInstance, field: 'batch', 'error')} required">
 	<label for="batch">
 		<g:message code="member.batch.label" default="Batch" />
@@ -65,7 +72,7 @@
 	<g:field name="batch" type="number" value="${memberInstance.batch}" required=""/>
 
 </div>
-
+<br>
 <div class="fieldcontain ${hasErrors(bean: memberInstance, field: 'email', 'error')} required">
 	<label for="email">
 		<g:message code="member.email.label" default="Email" />
@@ -74,7 +81,7 @@
 	<g:textField name="email" required="" value="${memberInstance?.email}"/>
 
 </div>
-
+<br>
 %{--<div class="fieldcontain ${hasErrors(bean: memberInstance, field: 'borrow', 'error')} ">
 	<label for="borrow">
 		<g:message code="member.borrow.label" default="Borrow" />
@@ -92,22 +99,40 @@
 
 
 </div>--}%
-
 <div class="fieldcontain ${hasErrors(bean: memberInstance, field: 'type', 'error')} required">
-	<label for="type">
-		<g:message code="member.type.label" default="Type" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="type" name="type.id" from="${yourBook.Type.list()}" optionKey="id" required="" value="${memberInstance?.type?.id}" class="many-to-one"/>
 
+    <div class="ui compact menu">
+        <div class="ui simple dropdown item">
+            <label for="type">
+                <g:message code="member.type.label" default="Type" />
+                <span class="required-indicator">*</span>
+            </label>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+                <div class="item">	<g:select id="type" name="type.id" from="${yourBook.Type.list()}" optionKey="id" required="" value="${memberInstance?.type?.id}" class="many-to-one"/>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
+<br>
 <div class="fieldcontain ${hasErrors(bean: memberInstance, field: 'user', 'error')} required">
-	<label for="user">
-		<g:message code="member.user.label" default="User" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="user" name="user.id" from="${yourBook.User.list()}" optionKey="id" required="" value="${memberInstance?.user?.id}" class="many-to-one"/>
+
+
+    <div class="ui compact menu">
+        <div class="ui simple dropdown item">
+            <label for="user">
+                <g:message code="member.user.label" default="User" />
+                <span class="required-indicator">*</span>
+            </label>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+                <div class="item"><g:select id="user" name="user.id" from="${yourBook.User.list()}" optionKey="id" required="" value="${memberInstance?.user?.id}" class="many-to-one"/>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 

@@ -16,4 +16,7 @@ class Borrow {
     static mapping = {
         status defaultValue: "false"
     }
+    String toString(){
+        return book
+    }
 }

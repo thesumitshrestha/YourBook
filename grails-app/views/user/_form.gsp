@@ -8,7 +8,7 @@
 		<g:message code="user.password.label" default="Password" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="password" required="" value="${userInstance?.password}"/>
+	<input id="password" name="password" type="password" required="" value="${userInstance?.password}"/>
 
 </div>
 
@@ -17,17 +17,25 @@
 		<g:message code="user.userName.label" default="User Name" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="userName" required="" value="${userInstance?.userName}"/>
+	<g:textField name="userName" id="userName" required="" value="${userInstance?.userName}"/>
+    <span id="userInfo"> UserName </span>
 
 </div>
-
+<br>
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'role', 'error')} required">
-	<label for="role">
-		<g:message code="user.role.label" default="Role" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select name="role" from="${userInstance.constraints.role.inList}" required="" value="${userInstance?.role}" valueMessagePrefix="user.role"/>
-
+    <div class="ui compact menu">
+        <div class="ui simple dropdown item">
+            <label for="role">
+                <g:message code="user.role.label" default="Role" />
+                <span class="required-indicator">*</span>
+            </label>
+            <i class="dropdown icon"></i>
+                 <div class="menu">
+                    <div class="item">	<g:select id="role" name="role" from="${userInstance.constraints.role.inList}" required="" value="${userInstance?.role}" valueMessagePrefix="user.role"/>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 %{--<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'member', 'error')} ">

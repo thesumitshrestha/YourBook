@@ -11,11 +11,18 @@
 	<body>
 	<body>
 		<div id="list-category" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<table class="ui table segment">
+			<h1 style="text-align: center"><g:message code="default.list.label" args="[entityName]" /></h1>
+
+            <g:if test="${flash.message}">
+                <div class="ui center aligned segment">
+                    <div class="ui positive message">
+                        <div class="header">
+                            <h1 style="text-align: center">${flash.message}</h1>
+                        </div>
+                    </div>
+                </div>
+            </g:if>
+			<table class="ui table segment" style="margin: 0px auto ; width:850px;">
 			<thead>
 					<tr>
 						<g:sortableColumn property="name" title="${message(code: 'category.name.label', default: 'Name')}" />

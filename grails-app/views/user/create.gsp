@@ -6,11 +6,17 @@
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<div id="create-user" class="content scaffold-create" role="main">
-			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
+		<div id="create-user" class="content scaffold-create" role="main" style="margin: 0px auto;width:94%;">
+			<h1 style="text-align: center"><g:message code="default.create.label" args="[entityName]" /></h1>
+            <g:if test="${flash.message}">
+                <div class="ui center aligned segment">
+                    <div class="ui positive message">
+                        <div class="header">
+                            <h1 style="text-align: center">${flash.message}</h1>
+                        </div>
+                    </div>
+                </div>
+            </g:if>
 			<g:hasErrors bean="${userInstance}">
 			<ul class="errors" role="alert">
 				<g:eachError bean="${userInstance}" var="error">
@@ -18,13 +24,14 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:userInstance, action:'save']" >
+			<g:form url="[resource:userInstance, action:'save']" id="userform">
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>
-				<fieldset class="buttons">
-					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-				</fieldset>
+				<div class="large ui buttons">
+                    <br>
+					<input type="submit" name="create" class="ui inverted blue button" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+				</div>
 			</g:form>
 		</div>
 	</body>

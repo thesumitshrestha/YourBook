@@ -22,16 +22,19 @@ class UserController {
 
     def authenticate = {
         def user = User.findByUserNameAndPassword(params.userName, params.password)
-        def member = Member.findById(params.id)
-        println "Me"+member
-        println "user" + user
         if (user) {
-            session.user = user.userName
             if (user.role.equalsIgnoreCase("admin")) {
+                session.userName=user.userName
+                session.userRole=user.role
+                println "In admin"
                 redirect(controller: 'book', action: 'index')
             }
             else{
-                redirect(controller: 'reserve', action: 'index')
+                session.userRole=user.role
+                def member=Member.findByUser(User.findById(user.id))
+                session.memberId=member.id
+                session.userName=member.firstName+" "+member.lastName
+                redirect(controller: 'book', action: 'index')
             }
         }
         else{
@@ -67,7 +70,7 @@ class UserController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'userInstance.label', default: 'User'), userInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'userInstance.label', default: 'User'), userInstance.userName])
                 redirect userInstance
             }
             '*' { respond userInstance, [status: CREATED] }
@@ -93,7 +96,7 @@ class UserController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'User.label', default: 'User'), userInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'User.label', default: 'User'), userInstance.userName])
                 redirect userInstance
             }
             '*' { respond userInstance, [status: OK] }
@@ -111,7 +114,7 @@ class UserController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'User.label', default: 'User'), userInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'User.label', default: 'User'), userInstance.userName])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NO_CONTENT }

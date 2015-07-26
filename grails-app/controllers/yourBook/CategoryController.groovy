@@ -38,7 +38,7 @@ class CategoryController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'category.label', default: 'Category'), categoryInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'category.label', default: 'Category'), categoryInstance.name])
                 redirect categoryInstance
             }
             '*' { respond categoryInstance, [status: CREATED] }
@@ -65,7 +65,7 @@ class CategoryController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Category.label', default: 'Category'), categoryInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Category.label', default: 'Category'), categoryInstance.name])
                 redirect categoryInstance
             }
             '*' { respond categoryInstance, [status: OK] }
@@ -74,17 +74,29 @@ class CategoryController {
 
     @Transactional
     def delete(Category categoryInstance) {
-
-        if (categoryInstance == null) {
-            notFound()
-            return
+        def categoryId=categoryInstance.id
+        def bookInstance=Book.findAllByCategory(Category.findById(categoryId))
+            for(int i=0;i<bookInstance.size();i++){
+                def borrowInstance=Borrow.findAllByBook(Book.findById(bookInstance[i].id))
+                for(int j=0;j<borrowInstance.size();j++){
+                    def borrow=Borrow.findById(borrowInstance[j].id)
+                    borrow.delete flush: true
+                }
+                def reserveInstance=Reserve.findAllByBook(Book.findById(bookInstance[i].id))
+                for(int j=0;j<reserveInstance.size();j++){
+                    def reserve=Reserve.findById(reserveInstance[j].id)
+                    reserve.delete flush: true
+                }
         }
-
+        for(int k=0;k<bookInstance.size();k++){
+            def book=Book.findById(bookInstance[k].id)
+            book.delete flush: true
+        }
         categoryInstance.delete flush: true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Category.label', default: 'Category'), categoryInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Category.label', default: 'Category'), categoryInstance.name])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NO_CONTENT }

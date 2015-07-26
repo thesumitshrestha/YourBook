@@ -14,8 +14,6 @@ class BookController {
                 ilike("book_title","%${params.query}%")
             }
         }
-        println "Book"+bookList
-        println "psad"+params.query
         render(view: 'index', model: [bookInstanceList:bookList])
     }
     def show(Book bookInstance) {
@@ -48,6 +46,7 @@ class BookController {
             }
             '*' { respond bookInstance, [status: CREATED] }
         }
+        flash.message = "New Book Added"
     }
 
     def test(){
@@ -67,12 +66,11 @@ class BookController {
             respond bookInstance.errors, view: 'edit'
             return
         }
-
         bookInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Book.label', default: 'Book'), bookInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Book.label', default: 'Book'), bookInstance.book_title])
                 redirect bookInstance
             }
             '*' { respond bookInstance, [status: OK] }
@@ -90,7 +88,7 @@ class BookController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Book.label', default: 'Book'), bookInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Book.label', default: 'Book'), bookInstance.book_title])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NO_CONTENT }

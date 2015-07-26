@@ -17,11 +17,15 @@ class BorrowController {
     def show(Borrow borrowInstance) {
         respond borrowInstance
     }
-
+    def search()
+    {
+        def borrowList = Borrow.findAllByMember(Member.findByRollNumber(params.query))
+        render(view: 'index', model: [borrowInstanceList: borrowList,borrowInstanceCount: borrowList.size()])
+    }
     def create() {
         def bookId=params.bookId
-        def bookName=params.bookName
-        model:[bookId:bookId,bookName:bookName]
+        def bookInstance=Book.findById(bookId)
+        render view: 'create', model:[bookInstance:bookInstance,action: 'createBorrow']
     }
 
   /*  def save() {
@@ -43,28 +47,41 @@ class BorrowController {
         borrow.date_borrow=params.date_borrow
         borrow.due_date=params.due_date
         borrow.book = Book.findById(params.bookId)
+        def book=Book.findById(params.bookId)
+        println "Before"+book.noofBooks
+        if(book.noofBooks>0){
+            book.noofBooks=book.noofBooks-1
+        }
+        book.save(flush: true, failOnError: true)
+        println "After Decreasing"+book.noofBooks
         borrow.member= Member.findByRollNumber(params.stdRoll)
         borrow.returnedDate=params.returnedDate
         borrow.status=params.status
-        println"Here"+borrow
+
         if(borrow.save(flush: true, failOnError: true)){
+            flash.message =  "A book has been borrowed by"+ " "+ borrow.member
             redirect(action: 'index')
         }
         else {
+            flash.message = "Oops! Something went wrong. Try again"
             redirect(action: 'create')
         }
     }
 
     def edit() {
-        def bookName =params.bookName
-        def rollNo = params.memberId
+        println "Borrow id is"+params.borrowId
         def borrowInstance=Borrow.findById(params.borrowId)
-        println "Borrow "+borrowInstance+" aaa "
-        model:[borrowInstance:borrowInstance,bookName: bookName,bookId: borrowInstance.bookId,rollNo:rollNo]
+        render view:'edit',model:[borrowInstance:borrowInstance,action:'edit']
+
     }
 
     @Transactional
     def update(Borrow borrowInstance) {
+        if(borrowInstance.returnedDate&&borrowInstance.status==false){
+            def book=Book.findById(params.bookId)
+            book.noofBooks=book.noofBooks+1
+            book.save(flush: true, failOnError: true)
+        }
         if (borrowInstance == null) {
             notFound()
             return
@@ -79,7 +96,7 @@ class BorrowController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Borrow.label', default: 'Borrow'), borrowInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Borrow.label', default: 'Borrow'), borrowInstance.book])
                 redirect borrowInstance
             }
             '*' { respond borrowInstance, [status: OK] }
@@ -98,7 +115,7 @@ class BorrowController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Borrow.label', default: 'Borrow'), borrowInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Borrow.label', default: 'Borrow'), borrowInstance.book])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NO_CONTENT }

@@ -8,17 +8,23 @@
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
 	<body>
-    <div style="width: 50%;margin-left: 320px">
+    <div>
 		<div id="list-member" class="content scaffold-list" role="main">
-			<h1>Member List</h1>
-			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<table class="ui celled table">
+			<h1 style="text-align: center">Member List</h1>
+            <g:if test="${flash.message}">
+                <div class="ui center aligned segment">
+                    <div class="ui positive message">
+                        <div class="header">
+                            <h1 style="text-align: center">${flash.message}</h1>
+                        </div>
+                    </div>
+                </div>
+            </g:if>
+			<table class="ui sortable celled table" style="width:820px;margin:0px auto">
 			<thead>
 					<tr>
 					
-						<g:sortableColumn property="rollNumber" title="${message(code: 'member.rollNumber.label', default: 'Roll Number')}" />
+						<g:sortableColumn property="rollNumber" title="${message(code: 'member.rollNumber.label', default: 'Roll Number')} " />
 					
 						<g:sortableColumn property="firstName" title="${message(code: 'member.firstName.label', default: 'First Name')}" />
 					
@@ -40,7 +46,7 @@
 				<g:each in="${memberInstanceList}" status="i" var="memberInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${memberInstance.id}">${fieldValue(bean: memberInstance, field: "rollNumber")}</g:link></td>
+						<td style="text-align: center;"><g:link action="show" id="${memberInstance.id}">${fieldValue(bean: memberInstance, field: "rollNumber")}</g:link></td>
 					
 						<td>${fieldValue(bean: memberInstance, field: "firstName")}</td>
 					

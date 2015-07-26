@@ -8,11 +8,17 @@
 	</head>
 	<body>
 
-		<div id="edit-member" class="content scaffold-edit" role="main">
-			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
+		<div id="edit-member" class="content scaffold-edit" role="main" style="margin: 0px auto;width:1200px">
+			<h1 style="text-align: center"><g:message code="default.edit.label" args="[entityName]" /></h1>
+            <g:if test="${flash.message}">
+                <div class="ui center aligned segment">
+                    <div class="ui positive message">
+                        <div class="header">
+                            <h1 style="text-align: center">${flash.message}</h1>
+                        </div>
+                    </div>
+                </div>
+            </g:if>
 			<g:hasErrors bean="${memberInstance}">
 			<ul class="errors" role="alert">
 				<g:eachError bean="${memberInstance}" var="error">
@@ -25,9 +31,10 @@
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>
-				<fieldset class="buttons">
-					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-				</fieldset>
+                <div class="large ui buttons">
+                    </br>
+					<g:actionSubmit class="ui inverted blue button" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+				</div>
 			</g:form>
 		</div>
 	</body>

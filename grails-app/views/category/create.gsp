@@ -6,8 +6,8 @@
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<div id="create-category" class="content scaffold-create" role="main">
-			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
+		<div id="create-category" class="content scaffold-create" role="main" style="margin: 0px auto;width: 890px;">
+			<h1 style="text-align: center"><g:message code="default.create.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
@@ -18,10 +18,12 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
+
 			<g:form url="[resource:categoryInstance, action:'save']" >
 					<g:render template="form"/>
-				<div class="ui grey labeled icon button">
-					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+                <br>
+                <div class="large ui buttons">
+                    <g:submitButton name="create" class="ui inverted blue button" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 				</div>
 			</g:form>
 		</div>
